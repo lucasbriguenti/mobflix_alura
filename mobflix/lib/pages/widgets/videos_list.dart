@@ -41,12 +41,14 @@ class VideosList extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 8,
+            ),
             GestureDetector(
               onTap: () {
                 launchUrlString(video.url);
               },
-              child: Container(
-                color: Colors.red,
+              child: SizedBox(
                 height: 220,
                 width: double.infinity,
                 child: Image.network(
