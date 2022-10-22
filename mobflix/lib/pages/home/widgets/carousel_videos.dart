@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:mobflix/models/video_model.dart';
+import 'package:mobflix/pages/widgets/image_cached.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class CarouselVideos extends StatelessWidget {
@@ -24,7 +25,7 @@ class CarouselVideos extends StatelessWidget {
         return Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
-            Image.network(
+            CachedImage(
               video.urlThumbnail,
               fit: BoxFit.cover,
               height: 200,

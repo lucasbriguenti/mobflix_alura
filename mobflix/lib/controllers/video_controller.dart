@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobflix/models/category_model.dart';
 import 'package:mobflix/models/video_model.dart';
 
-class VideoController {
+class VideoController extends ChangeNotifier {
   List<Video> _videos = [];
   List<Category> _categories = [];
   VideoController() {
@@ -63,4 +63,9 @@ class VideoController {
       _videos.where((video) => video.showInBanner).toList();
 
   List<Category> getCategories() => _categories;
+
+  void addVideo(Video video) {
+    _videos.add(video);
+    notifyListeners();
+  }
 }

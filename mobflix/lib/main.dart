@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mobflix/controllers/video_controller.dart';
-import 'package:mobflix/pages/home_page.dart';
+import 'package:mobflix/utils/routes.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,12 +15,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(create: (context) => VideoController()),
+        ChangeNotifierProvider(
+          create: (context) => VideoController(),
+        ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         title: 'Mobflix',
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        theme: ThemeData(
+          textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+        ),
+        initialRoute: 'home',
+        onGenerateRoute: getRoutes,
       ),
     );
   }

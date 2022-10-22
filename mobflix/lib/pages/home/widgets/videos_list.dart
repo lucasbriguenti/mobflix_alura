@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobflix/models/video_model.dart';
+import 'package:mobflix/pages/widgets/image_cached.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class VideosList extends StatelessWidget {
@@ -51,7 +52,7 @@ class VideosList extends StatelessWidget {
               child: SizedBox(
                 height: 220,
                 width: double.infinity,
-                child: Image.network(
+                child: CachedImage(
                   video.urlThumbnail,
                   fit: BoxFit.cover,
                 ),

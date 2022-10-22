@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobflix/controllers/video_controller.dart';
-import 'package:mobflix/pages/widgets/videos_list.dart';
-import 'package:mobflix/pages/widgets/carousel_videos.dart';
-import 'package:mobflix/pages/widgets/categories_list.dart';
+import 'package:mobflix/pages/home/widgets/videos_list.dart';
+import 'package:mobflix/pages/home/widgets/carousel_videos.dart';
+import 'package:mobflix/pages/home/widgets/categories_list.dart';
 import 'package:mobflix/utils/color.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,9 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.black87,
       floatingActionButton: FloatingActionButton(
         backgroundColor: MobflixColors.purple,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('addvideo');
+        },
         child: const Icon(
           Icons.add,
           size: 40,
