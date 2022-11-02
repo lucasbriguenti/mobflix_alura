@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:mobflix/models/category_model.dart';
+import 'package:mobflix/models/database/repositories/category_repository.dart';
 import 'package:mobflix/models/video_model.dart';
 
 class VideoController extends ChangeNotifier {
-  List<Video> _videos = [];
   List<Category> _categories = [];
-  VideoController() {
+  final CategoryRepository categoryRepository;
+  VideoController({required this.categoryRepository}) {
     _loadCategories();
-    _loadVideos();
   }
 
-  void _loadCategories() {
-    _categories = [
-      Category(name: 'Formula 1', color: Colors.red),
-      Category(name: 'Formula Indy', color: Colors.grey),
-      Category(name: 'Formula E', color: Colors.green),
-      Category(name: 'Stock Car', color: Colors.brown),
-    ];
+  Future _loadCategories() async {
+    _categories = await categoryRepository.getAll();
   }
 
-  void _loadVideos() {
+  Future<List<Video>> getVideos() async {
+    if (_categories.isEmpty) return [];
+
     final formula1Category =
         _categories.firstWhere((element) => element.name == 'Formula 1');
     final formulaIndyCategory =
@@ -28,7 +25,7 @@ class VideoController extends ChangeNotifier {
         _categories.firstWhere((element) => element.name == 'Formula E');
     final stockCarCategory =
         _categories.firstWhere((element) => element.name == 'Stock Car');
-    _videos = [
+    return [
       Video(
         url: 'https://www.youtube.com/watch?v=0J7cmh3MLp4',
         category: formula1Category,
@@ -57,15 +54,14 @@ class VideoController extends ChangeNotifier {
     ];
   }
 
-  List<Video> getVideos() => _videos;
-
-  List<Video> getVideosForBanner() =>
-      _videos.where((video) => video.showInBanner).toList();
+  Future<List<Video>> getVideosForBanner() async {
+    final videos = await getVideos();
+    return videos.where((video) => video.showInBanner).toList();
+  }
 
   List<Category> getCategories() => _categories;
 
   void addVideo(Video video) {
-    _videos.add(video);
     notifyListeners();
   }
 }

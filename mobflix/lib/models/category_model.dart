@@ -17,6 +17,17 @@ class Category {
     };
   }
 
+  Map<String, dynamic> toMapDb() {
+    return {'name': name, 'color': color.value.toString()};
+  }
+
+  factory Category.fromMapDb(Map<String, dynamic> map) {
+    return Category(
+      name: map['NAME'] as String,
+      color: Color(int.parse(map['COLOR'])),
+    );
+  }
+
   factory Category.fromMap(Map<String, dynamic> map) {
     return Category(
       name: map['name'] as String,

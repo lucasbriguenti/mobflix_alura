@@ -41,7 +41,31 @@ class HomePage extends StatelessWidget {
         children: [
           SizedBox(
             height: 200,
-            child: CarouselVideos(videos: videoController.getVideosForBanner()),
+            child: FutureBuilder(
+                future: videoController.getVideosForBanner(),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.waiting:
+                    case ConnectionState.active:
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(
+                          backgroundColor: Colors.white,
+                        ),
+                      );
+                    case ConnectionState.done:
+                      if (snapshot.hasData && snapshot.data != null) {
+                        if (snapshot.data!.isNotEmpty) {
+                          return CarouselVideos(videos: snapshot.data!);
+                        }
+
+                        return const Center(
+                          child: Text('Não a videos'),
+                        );
+                      }
+                  }
+                  return const Text('Erro desconhecido');
+                }),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -53,9 +77,18 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: VideosList(
-              videos: videoController.getVideos(),
-            ),
+            child: FutureBuilder(
+                future: videoController.getVideos(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return VideosList(
+                      videos: snapshot.data!,
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+                }),
           ),
         ],
       ),
